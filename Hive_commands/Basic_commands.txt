@@ -1,0 +1,26 @@
+--Basic commands
+
+--create a database
+
+create database hive_realtime;
+
+--Create the table of Beverages and Branches 
+create table Bev_and_Branch(bev_name string,branch_name string)row format delimited fields terminated by ',';
+
+--create the table of Beverages and Consumers
+create table Bev_and_Consumers(bev_name string,cons_count int)row format delimited fields terminated by ',';
+
+--Make a new directory in HDFS
+hadoop fs -mkdir /user/hadoop/hive_realtime_inputs;
+
+--Load the data related to Beverages and Branches from local file system to HDFS
+hadoop fs -put /home/hadoop/Bev_and_Branch.txt /user/hadoop/hive_realtime_inputs;
+
+--Load the data related to Beverages and Consumers from local file system to HDFS
+hadoop fs -put /home/hadoop/Bev_and_Consumers.txt /user/hadoop/hive_realtime_inputs;
+
+--Load the data related to Beverages and Branches into Hive table 
+Load data inpath '/user/hadoop/hive_realtime_inputs/Bev_and_Branch.txt' into table Bev_and_Branch;
+
+--Load the data related to Beverages and Consumers into Hive table
+Load data inpath '/user/hadoop/hive_realtime_inputs/Bev_and_Consumers.txt' into table Bev_and_Consumers;
