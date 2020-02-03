@@ -1,0 +1,29 @@
+usecase01:
+
+select bev_name,branch_name from Bev_and_Branch where branch_name = 'Branch1';
+
+create table usecase01 as select bev_name,branch_name from Bev_and_Branch where branch_name = 'Branch1';
+
+select usecase01.bev_name,sum(cons_count) as total from usecase01 join Bev_and_Consumers on usecase01.bev_name = Bev_and_Consumers.bev_name group by usecase01.bev_name;
+
+create table usecase01_table as select usecase01.bev_name,sum(cons_count) as total from usecase01 join Bev_and_Consumers on usecase01.bev_name = Bev_and_Consumers.bev_name group by usecase01.bev_name;
+
+select sum(total) from usecase01_table;
+
+OUTPUT: 1115974
+
+Usecase02:
+
+select bev_name,total from usecase01_table order by total limit 1;
+
+OUTPUT: SMALL_LATTE 46592
+
+Usecase03:
+
+select bev_name,total from usecase01_table order by total desc limit 1;
+
+OUTPUT: Special_cappuccino      108163
+
+Usecase04:
+
+select bev_name,branch_name from Bev_and_Branch where branch_name = 'Branch1' or branch_name = 'Branch2';
